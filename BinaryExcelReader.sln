@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A4AF75BD-72DA-4EA0-AFB1-CA995ED4AD74}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{675C86E5-3EE3-4B99-9993-A69DBF9FCF6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E4DB31EA-F761-477E-8297-C076A672368C}"
+	ProjectSection(SolutionItems) = preProject
+		docs\README.md = docs\README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinaryExcelReader", "src\BinaryExcelReader\BinaryExcelReader.csproj", "{815CC8A2-E97A-4E2E-876C-B1624BDA6493}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BinaryExcelReaderTests", "tests\BinaryExcelReaderTests\BinaryExcelReaderTests.csproj", "{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{815CC8A2-E97A-4E2E-876C-B1624BDA6493}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815CC8A2-E97A-4E2E-876C-B1624BDA6493}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815CC8A2-E97A-4E2E-876C-B1624BDA6493}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815CC8A2-E97A-4E2E-876C-B1624BDA6493}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{815CC8A2-E97A-4E2E-876C-B1624BDA6493} = {A4AF75BD-72DA-4EA0-AFB1-CA995ED4AD74}
+		{B15D27B7-F6B3-4346-BFF7-31BFBCA3CACB} = {675C86E5-3EE3-4B99-9993-A69DBF9FCF6A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B3415F4-6320-4444-B262-9AA28F27194F}
+	EndGlobalSection
+EndGlobal
