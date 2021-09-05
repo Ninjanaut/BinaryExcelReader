@@ -27,7 +27,7 @@ from command line
     * Columns `A, B, B, B1` will be loaded as `A, B, B1, B11` (this is OLE DB Driver default setting).
 * Another options might be set via options parameter
 
-| Descriptions                          | Options                   | Defaults  | Notes |
+| Description                           | Option                    | Default   | Note |
 | -                                     | -                         | -         | - |
 | Skip top rows                         | HeaderRowIndex            | 0         | Keep in mind that OLE DB driver does not take into account blank rows. For example, if you have 4 additional non-header rows from top and two of them are blank, the header row index is 2. Warning: if the row contains formatting, it is not considered blank.
 | Remove empty rows                     | RemoveEmptyRows           | true      | If set to false and the row does not contains anything (even formatting), then the row will not be loaded anyway.
