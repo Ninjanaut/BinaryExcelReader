@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
@@ -6,14 +6,14 @@ using System.Linq;
 
 namespace Ninjanaut.IO
 {
-
     public static class BinaryExcelReader
     {
         /// <summary>
-        /// Returns DataTable object from excel file with values loaded as strings.
+        /// Returns datatable object from the excel file with values retrieved as strings.
         /// </summary>
-        /// <param name="path">A relative or absolute path of the excel file.</param>
-        /// <param name="options">The Options object allows to change the default settings.</param>
+        /// <param name="path">Relative or absolute path to the excel file.</param>
+        /// <param name="sheetName">The name of the excel sheet that you want to convert to a datatable object.</param>
+        /// <param name="options">Settings you might want to change.</param>
         public static DataTable ToDataTable(string path, string sheetName, BinaryExcelReaderOptions options = null)
         {
             if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));

@@ -3,8 +3,7 @@
     public class BinaryExcelReaderOptions
     {
         /// <summary>
-        /// Default value is null. 
-        /// I recommend setting this value so that you don't accidentally load empty columns.
+        /// Default value is null. I recommend setting this value so that you don't accidentally load empty columns.
         /// </summary>
         public int? MaxColumns { get; set; }
 
@@ -15,11 +14,13 @@
         /// </summary>
         public int? HeaderRowIndex { get; set; }
 
+
         /// <summary>
         /// Default value is true. If set to false and the row does not contains anything (even formatting), 
         /// then the row will not be loaded anyway.
         /// </summary>
         public bool RemoveEmptyRows { get; set; }
+
 
         /// <summary>
         /// Default value is true. If set to false, HeaderRowIndex property is ignored.

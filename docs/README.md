@@ -1,6 +1,9 @@
-Welcome to the BinaryExcelReader project website! BinaryExcelReader is lightweight C# library to ease loading data from Excel binary (xlsb) file format into DataTable object, based on Microsoft OLE DB Driver. Also supports xls, xlsx and xlsm formats.
+# Ninjanaut.BinaryExcelReader
+Welcome to the project website! BinaryExcelReader is lightweight C# library to ease loading data 
+from binary Excel file format (XLSB) into DataTable object. Library is based on Microsoft OLE DB driver.
+Other formats XLS, XLSX and XLSM are also supported.
 
-> if you don't need to load .XLSB format, consider to use excel reader without OLE DB Driver dependency [Ninjanaut.ExcelReader](https://github.com/Ninjanaut/ExcelReader)
+> If you don't need to load XLSB format, consider to use excel reader without OLE DB driver dependency [Ninjanaut.ExcelReader](https://github.com/Ninjanaut/ExcelReader)
 
 # Installation
 
@@ -24,7 +27,7 @@ from command line
     * Columns `A, B, B, B1` will be loaded as `A, B, B1, B11` (this is OLE DB Driver default setting).
 * Another options might be set via options parameter
 
-| Descriptions                           | Options                   | Defaults  | Notes |
+| Descriptions                          | Options                   | Defaults  | Notes |
 | -                                     | -                         | -         | - |
 | Skip top rows                         | HeaderRowIndex            | 0         | Keep in mind that OLE DB driver does not take into account blank rows. For example, if you have 4 additional non-header rows from top and two of them are blank, the header row index is 2. Warning: if the row contains formatting, it is not considered blank.
 | Remove empty rows                     | RemoveEmptyRows           | true      | If set to false and the row does not contains anything (even formatting), then the row will not be loaded anyway.
@@ -36,19 +39,20 @@ from command line
 ```csharp
 using Ninjanaut.IO;
 
-// From file path
+// Convert excel sheet into datatable object.
 var path = @"C:\FooExcel.xlsx";
-var sheetName = "Sheet1"
+var sheetName = "Sheet1";
 var datatable = BinaryExcelReader.ToDataTable(path, sheetName);
 ```
 
-you can also use options argument
+You can also override the default settings using the options parameter.
 
 ```csharp
 using Ninjanaut.IO;
 
+// Convert excel sheet into datatable object using options parameter.
 var path = @"C:\FooExcel.xlsx";
-var sheetName = "Sheet1"
+var sheetName = "Sheet1";
 var options = new BinaryExcelReaderOptions 
 { 
     // Default settings:
@@ -60,13 +64,20 @@ var options = new BinaryExcelReaderOptions
 
 var datatable = BinaryExcelReader.ToDataTable(path, sheetName, options);
 
-// The options may be defined within the method.
+// Or the options object may be defined within the method directly.
 var datatable = ExcelReader.ToDataTable(path, sheetName, new() { MaxColumns = 5 });
 ```
 
 # Notes
 
 DataTable object is suitable for this purpose, because you can easily view the read data directly in Visual Studio for debug purposes, create a collection of entities from it or pass datatable as parameter directly into the SQL server stored procedure.
+
+# Release notes
+
+| Version | Note |
+|- |- |
+| 2.0.0 | ReadData method was set as private. |
+| 1.0.0 | Initial release |
 
 # Contribution
 
