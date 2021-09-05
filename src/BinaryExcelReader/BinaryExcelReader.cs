@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.OleDb;
 using System.Linq;
@@ -36,7 +36,7 @@ namespace Ninjanaut.IO
             return options;
         }
 
-        public static DataTable ReadData(string connectionString, string sheetName, BinaryExcelReaderOptions options)
+        private static DataTable ReadData(string connectionString, string sheetName, BinaryExcelReaderOptions options)
         {
             var result = new DataTable();
 
