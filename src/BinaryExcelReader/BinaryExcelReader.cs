@@ -18,12 +18,26 @@ namespace Ninjanaut.IO
         {
             if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
 
-            options = LoadOptions(options);
+            try
+            {
+                options = LoadOptions(options);
 
-            var hdr = options.HeaderExists ? "YES" : "NO";
-            var connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\"{path}\";Extended Properties = \"Excel 12.0;HDR={hdr};IMEX=1\"";
+                var hdr = options.HeaderExists ? "YES" : "NO";
+                var connectionString = $"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=\"{path}\";Extended Properties = \"Excel 12.0;HDR={hdr};IMEX=1\"";
 
-            return ReadData(connectionString, sheetName, options);
+                return ReadData(connectionString, sheetName, options);
+            }
+            catch (OleDbException ex) when (ex.ErrorCode == -2147467259) { throw new BinaryExcelReaderException("File not found or data are not accessible.", ex); }
+        }
+
+        /// <summary>
+        /// Returns datatable object from the excel file with values retrieved as strings. It will use the first worksheet ordered alphabetically.
+        /// </summary>
+        /// <param name="path">Relative or absolute path to the excel file.</param>
+        /// <param name="options">Settings you might want to change.</param>
+        public static DataTable ToDataTable(string path, BinaryExcelReaderOptions options = null)
+        {
+            return ToDataTable(path, null, options);
         }
 
         private static BinaryExcelReaderOptions LoadOptions(BinaryExcelReaderOptions options)
@@ -36,11 +50,36 @@ namespace Ninjanaut.IO
             return options;
         }
 
+        private static string GetSheetName(string sheetName, OleDbConnection connection)
+        {
+            if (!string.IsNullOrEmpty(sheetName)) return sheetName;
+
+            // Will return the first worksheet name alphabetically.
+            // Unfortunately, the OleDB driver cannot load the worksheets in the order within Excel.
+            DataTable sheets = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
+
+            foreach (DataRow row in sheets.Rows)
+            {
+                // When loading with OleDB, the Excel worksheet name contains $ sign at the end.
+                string sheet = row["TABLE_NAME"].ToString();
+
+                if (sheet.EndsWith("$"))
+                {
+                    string sheetWithoutDollarSign = sheet.Remove(sheet.Length - 1);
+                    return sheetWithoutDollarSign;
+                }
+            }
+
+            throw new BinaryExcelReaderException("Could not resolve the name of the worksheet.");
+        }
+
         private static DataTable ReadData(string connectionString, string sheetName, BinaryExcelReaderOptions options)
         {
             var result = new DataTable();
 
             using OleDbConnection connection = new(connectionString); connection.Open();
+
+            sheetName = GetSheetName(sheetName, connection);
 
             string query = $"select * from [{sheetName}$]";
 
@@ -80,7 +119,7 @@ namespace Ninjanaut.IO
             while (reader.Read())
             {
                 // If excel does not contains header, we just insert the rows.
-                if (options.HeaderExists == false) 
+                if (options.HeaderExists == false)
                 {
                     DataRow row = CreateRow(datatable, reader);
                     AddRow(datatable, row, options);

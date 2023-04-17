@@ -27,6 +27,9 @@
     <None Update="TestData\AdditionalColumns.xlsb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="TestData\Basic.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\CustomSheetName.xlsb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

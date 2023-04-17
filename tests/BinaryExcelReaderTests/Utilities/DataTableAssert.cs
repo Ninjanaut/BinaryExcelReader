@@ -17,7 +17,7 @@ namespace BinaryExcelReaderTests.Utilities
             {
                 for (var colIndex = 0; colIndex < expected.Rows[rowIndex].ItemArray.Length; colIndex++)
                 {
-                    var expectedValue = expected.Rows[rowIndex].ItemArray[colIndex]?.ToString();
+                    var expectedValue = expected.Rows[rowIndex][colIndex].ToString();
                     var excelValue = actual.Rows[rowIndex][colIndex].ToString();
                     Assert.Equal(expectedValue, excelValue);
                 }
