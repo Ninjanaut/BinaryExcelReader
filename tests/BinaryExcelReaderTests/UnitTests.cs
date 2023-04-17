@@ -14,7 +14,7 @@ namespace BinaryBinaryExcelReaderTests
         {
             // Act
             // OleDbDataReader automatically ignore blank rows from the top!
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRowsFromTop.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRowsFromTop.xlsb",
                 "CustomSheetName");
 
             // Assert
@@ -40,7 +40,7 @@ namespace BinaryBinaryExcelReaderTests
         public void Load_excel_with_invalid_header_rows_from_top()
         {
             // Act
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\InvalidRowsFromTop.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\InvalidRowsFromTop.xlsb",
                 "CustomSheetName", new() { HeaderRowIndex = 2 });
 
             // Assert
@@ -66,7 +66,7 @@ namespace BinaryBinaryExcelReaderTests
         public void Load_excel_and_remove_empty_rows()
         {
             // Act
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRows.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRows.xlsb",
                 "CustomSheetName", new() { RemoveEmptyRows = true });
 
             // Assert
@@ -94,7 +94,7 @@ namespace BinaryBinaryExcelReaderTests
             // Act
             // Each empty row contains formatting so that excel also knows that it is the row to include.
             // If there is really nothing in the row, the row is still ignored.
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRows.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\EmptyRows.xlsb",
                 "CustomSheetName", new() { RemoveEmptyRows = false });
 
             // Assert
@@ -126,7 +126,7 @@ namespace BinaryBinaryExcelReaderTests
         public void Load_excel_with_max_columns_option()
         {
             // Act
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\AdditionalColumns.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\AdditionalColumns.xlsb",
                 "CustomSheetName", new() { MaxColumns = 3 });
 
             // Assert
@@ -152,7 +152,7 @@ namespace BinaryBinaryExcelReaderTests
         public void Load_excel_with_duplicated_columns()
         {
             // Act
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\DuplicatedColumns.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\DuplicatedColumns.xlsb",
                 "CustomSheetName");
 
             // Assert
@@ -182,7 +182,7 @@ namespace BinaryBinaryExcelReaderTests
         public void Load_excel_via_sheet_name()
         {
             // Act
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\CustomSheetName.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\CustomSheetName.xlsb",
                 "Custom Sheet Name");
 
             // Assert
@@ -209,7 +209,7 @@ namespace BinaryBinaryExcelReaderTests
         {
             // Act
             var datatable = BinaryExcelReader.ToDataTable(@"TestData\AdditionalColumns.xlsb",
-                "CustomSheetName", new() { MaxColumns = 20,  });
+                "CustomSheetName", new() { MaxColumns = 20, });
 
             // Assert
             var dt = new DataTable();
@@ -237,7 +237,7 @@ namespace BinaryBinaryExcelReaderTests
         {
             // Act
             // Excel has first sheet hidden.
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsb", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsb",
                 "CustomSheetName", new() { HeaderRowIndex = 1 });
 
             // Assert
@@ -296,7 +296,7 @@ namespace BinaryBinaryExcelReaderTests
                 new DataColumn("F10"),
             });
 
-            dt.AddRow(new object[] { "", "B", "B", "C", "", "D", "TRUE", "1", "28/08/2021", "12.56" });
+            dt.AddRow(new object[] { "", "B", "B", "C", "", "D", "TRUE", "1", dateValue, "12.56" });
             dt.AddRow(new object[] { "1", "Value of B4", "3", "", "5", "", "7", "", "", "1325,48" });
             dt.AddRow(new object[] { "", "", "3", "", "4", "", "", "FALSE", "", "" });
             dt.AddRow(new object[] { "1", "7", "3", "4", dateValue, "6", "7", "", "1234.4895", "" });
@@ -312,7 +312,7 @@ namespace BinaryBinaryExcelReaderTests
         {
             // Act
             // Excel has first sheet hidden.
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsx", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsx",
                 "CustomSheetName", new() { HeaderRowIndex = 1 });
 
             // Assert
@@ -386,7 +386,7 @@ namespace BinaryBinaryExcelReaderTests
         {
             // Act
             // Excel has first sheet hidden.
-            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsm", 
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\KnownEdgeCases.xlsm",
                 "CustomSheetName", new() { HeaderRowIndex = 1 });
 
             // Assert
@@ -416,6 +416,44 @@ namespace BinaryBinaryExcelReaderTests
             Assert.Equal(3, datatable.Rows.Count);
             DataTableAssert.ColumnsWithDuplication(datatable, dt, duplicatedColumnNumber: 3);
             DataTableAssert.Rows(datatable, dt);
+        }
+
+        [Fact]
+        public void Load_xls_excel_without_sheetname_parameter_provided()
+        {
+            // Act
+            var datatable = BinaryExcelReader.ToDataTable(@"TestData\Basic.xlsx");
+
+            // Assert
+            var dt = new DataTable();
+
+            dt.Columns.AddRange(new[]
+            {
+                new DataColumn("A"),
+                new DataColumn("B"),
+                new DataColumn("C")
+            });
+
+            dt.AddRow(new object[] { "1", "2", "3" });
+            dt.AddRow(new object[] { "1", "2", "3" });
+            dt.AddRow(new object[] { "1", "2", "3" });
+
+            Assert.NotNull(datatable);
+            Assert.Equal(3, datatable.Rows.Count);
+            DataTableAssert.DataTables(datatable, dt);
+        }
+
+        [Fact]
+        public void Load_nonexistent_excel_should_return_user_friendly_exception()
+        {
+            // Actt 
+            string path = "abc";
+
+            // Act
+            void act() => BinaryExcelReader.ToDataTable(path);
+
+            // Assert
+            Assert.Throws<BinaryExcelReaderException>(() => act());
         }
     }
 }

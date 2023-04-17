@@ -76,6 +76,7 @@ DataTable object is suitable for this purpose, because you can easily view the r
 
 | Version | Note |
 |- |- |
+| 2.1.0 | Add new ```ToDataTable(string path, BinaryExcelReaderOptions options = null)``` signature so that worksheet name does not need to be provided. <br/> When file is not found or accessible, the ```BinaryExcelReaderException``` is thrown. <br/> Minor fix in test project.  |
 | 2.0.0 | ReadData method was set as private. |
 | 1.0.0 | Initial release |
 
